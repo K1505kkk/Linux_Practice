@@ -287,3 +287,30 @@ base64 -d data.txt
 ```text
 pYfOY6HwUsDj5rL9UvyhU7MCmv8vN5Ro
 ```
+---
+
+## Level 11
+
+### Objective
+Decode the ROT13-encoded password stored in `data.txt`.
+
+### Commands
+
+```bash
+cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+```
+
+### Linux Concept
+
+- `tr` translates characters from one set to another.
+- ROT13 rotates every alphabetic character by 13 positions.
+- Applying ROT13 twice returns the original text.
+
+### Password
+
+```text
+GROozWPO8QyN0mGrjUkID0WCYkZiQxrN
+```
+
+---
+
