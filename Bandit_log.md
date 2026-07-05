@@ -314,3 +314,70 @@ GROozWPO8QyN0mGrjUkID0WCYkZiQxrN
 
 ---
 
+## Level 12
+
+### Objective
+
+Recover the password from `data.txt`, which is a hexdump of a file that has been repeatedly compressed.
+
+### Commands
+
+```bash
+mkdir /tmp/bandit12
+cp ~/data.txt .
+
+xxd -r data.txt > data
+
+file data
+
+mv data data.gz
+gunzip data.gz
+
+file data
+
+mv data data.bz2
+bunzip2 data.bz2
+
+file data
+
+mv data data.tar.gz
+gunzip data.tar.gz
+
+tar -xf data.tar
+
+file data5.bin
+tar -xf data5.bin
+
+file data6.bin
+mv data6.bin data6.bz2
+bunzip2 data6.bz2
+
+file data6
+tar -xf data6
+
+file data8.bin
+mv data8.bin data8.gz
+gunzip data8.gz
+
+cat data8
+```
+
+### Linux Concept
+
+- `xxd -r` reverses a hexdump back into its original binary file.
+- `file` identifies the actual type of a file, regardless of its extension.
+- `gunzip` decompresses **gzip** files.
+- `bunzip2` decompresses **bzip2** files.
+- `tar -xf` extracts the contents of a **tar archive**.
+- Always inspect a file with `file` before deciding which tool to use.
+- Never use `cat` on binary files; only use it once the file is identified as ASCII text.
+
+### Password
+
+```text
+qQYQiHOBPR8zR61qxYqX45quvihF2uzk
+```
+
+---
+
+
