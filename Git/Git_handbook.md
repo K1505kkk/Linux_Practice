@@ -208,20 +208,6 @@ git push
 
 ---
 
-# Repository Structure
-
-```
-Linux_Practice/
-
-├── README.md
-├── Linux_Handbook.md
-├── Git_Handbook.md
-└── OverTheWire/
-    └── Bandit_log.md
-```
-
----
-
 # Lessons Learned
 
 - `git status` is your best friend.

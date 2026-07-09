@@ -410,3 +410,35 @@ aaWecNkG4FhxJQxz07uiwzVP6bJiYS65
 
 ---
 
+## Level 14
+
+### Objective
+
+Submit the current password to a service listening on `localhost` at port `30000` to receive the password for the next level.
+
+### Commands
+
+```bash
+nmap -p 30000 -T4 -sV localhost
+
+echo '<current_password>' | nc localhost 30000
+```
+
+### Linux Concept
+
+- `nmap` scans hosts to discover open ports and identify running services.
+- `-p 30000` scans only port `30000`.
+- `-sV` attempts to detect the service running on the port.
+- `localhost` refers to the current machine (`127.0.0.1`).
+- `nc` (Netcat) creates TCP/UDP connections and can send or receive data.
+- `echo` outputs text.
+- The pipe (`|`) sends the output of one command as the input to another.
+- `echo '<password>' | nc localhost 30000` sends the password directly to the service without entering interactive mode.
+
+### Password
+
+```text
+pbLYuZtTg4MgaqfJx8jbA9gKKGqM68A7
+```
+
+---
