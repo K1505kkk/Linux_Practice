@@ -1,9 +1,3 @@
-
----
-
-# `Git_Handbook.md`
-
-````md
 # Git Handbook
 
 Personal Git + GitHub workflow used from the Linux terminal.
