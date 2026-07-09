@@ -380,4 +380,33 @@ qQYQiHOBPR8zR61qxYqX45quvihF2uzk
 
 ---
 
+## Level 13
+
+### Objective
+
+Use the provided private SSH key (`sshkey.private`) to log in as `bandit14` and retrieve the password for the next level.
+
+### Commands
+
+```bash
+ssh -i sshkey.private bandit14@bandit.labs.overthewire.org -p 2220
+
+cat /etc/bandit_pass/bandit14
+```
+
+### Linux Concept
+
+- `ssh` establishes a secure remote shell connection.
+- `-i` specifies the private SSH key (identity file) to use for authentication.
+- `-p` specifies the SSH port.
+- SSH key authentication replaces passwords by proving ownership of the matching private key.
+- The private key must remain secret, while the corresponding public key is stored on the server.
+
+### Password
+
+```text
+aaWecNkG4FhxJQxz07uiwzVP6bJiYS65
+```
+
+---
 
