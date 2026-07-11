@@ -442,3 +442,67 @@ pbLYuZtTg4MgaqfJx8jbA9gKKGqM68A7
 ```
 
 ---
+
+## Level 15
+
+### Objective
+
+Submit the current password to the service listening on `localhost` at port `30001` using an SSL/TLS encrypted connection to receive the password for the next level.
+
+### Commands
+
+```bash
+echo "pbLYuZtTg4MgaqfJx8jbA9gKKGqM68A7" | openssl s_client -connect localhost:30001 -quiet
+```
+
+### Linux Concept
+
+- `openssl s_client` creates an SSL/TLS client connection to a remote service.
+- `-connect host:port` specifies the destination host and port.
+- `-quiet` suppresses most handshake information, displaying mainly the server's response.
+- SSL/TLS encrypts data transmitted over a TCP connection.
+- The pipe (`|`) sends the output of `echo` to the standard input of `openssl s_client`.
+
+### Password
+
+```text
+kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V
+```
+
+---
+
+## Level 16
+
+### Objective
+
+Scan the ports between `31000` and `32000` on `localhost` to find the service that accepts SSL/TLS connections. Submit the current password to that service to obtain the private SSH key for the next level.
+
+### Commands
+
+```bash
+nmap -T4 -sV -p 31000-32000 localhost
+
+echo "kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V" | openssl s_client -connect localhost:<PORT> -quiet
+```
+
+### Linux Concept
+
+- `nmap` is a network scanner used to discover hosts, open ports, and running services.
+- `-p 31000-32000` scans the specified range of ports.
+- `-T4` speeds up the scan using the Aggressive timing template, making it ideal for trusted networks and labs.
+- `-sV` attempts to identify the service and version running on each open port.
+- `openssl s_client` creates an SSL/TLS client connection to a server.
+- `-connect host:port` specifies the destination server and port.
+- The pipe (`|`) sends the current password to the SSL service through standard input (`stdin`).
+- Unlike previous levels, the service returns an **SSH private key** instead of a password.
+
+### Password
+
+```text
+N/A
+
+Reward:
+Private SSH key for bandit17
+```
+
+---
