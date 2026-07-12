@@ -482,7 +482,7 @@ Scan the ports between `31000` and `32000` on `localhost` to find the service th
 ```bash
 nmap -T4 -sV -p 31000-32000 localhost
 
-echo "kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V" | openssl s_client -connect localhost:<PORT> -quiet
+ 
 ```
 
 ### Linux Concept
@@ -503,6 +503,123 @@ N/A
 
 Reward:
 Private SSH key for bandit17
+```
+
+---
+
+## Level 17
+
+### Objective
+
+Find the password for the next level by comparing the contents of `passwords.old` and `passwords.new`. The password is the only line that differs between the two files.
+
+### Commands
+
+```bash
+ls
+
+diff passwords.old passwords.new
+```
+
+### Linux Concept
+
+- `diff` compares two files line by line.
+- Lines beginning with `<` exist only in the first file.
+- Lines beginning with `>` exist only in the second file.
+- Since only one line differs, the line prefixed with `>` is the new password.
+- `diff` is one of the most commonly used Linux utilities for comparing configuration files, source code, logs, and text files.
+
+### Practical Intel
+
+Common `diff` options:
+
+```bash
+diff file1 file2          # Basic comparison
+
+diff -u file1 file2       # Unified output (most commonly used)
+
+diff -y file1 file2       # Side-by-side comparison
+
+diff -r dir1 dir2         # Compare directories recursively
+
+diff -q file1 file2       # Only report whether files differ
+```
+
+Real-world uses:
+
+- Compare configuration files before deployment.
+- Review changes to Infrastructure as Code (Terraform, Ansible).
+- Compare Kubernetes manifests.
+- Check differences between application logs.
+- Generate patches and review code changes.
+
+### Password
+
+```text
+OQxXZjELndr90zuhOTDYBEomI0SZITXI
+```
+
+---
+
+## Level 18
+
+### Objective
+
+Retrieve the password stored in the `readme` file. A `.bashrc` file automatically logs the user out upon login, preventing an interactive shell. Bypass the shell by executing a command directly during the SSH connection.
+
+### Commands
+
+```bash
+ssh bandit18@bandit.labs.overthewire.org -p 2220 "cat readme"
+```
+
+### Linux Concept
+
+- `ssh` can execute a command on a remote machine without opening an interactive shell.
+- Anything enclosed in quotes after the SSH connection details is executed directly on the remote system.
+- Since `.bashrc` runs only when starting an interactive shell, executing a command directly bypasses the logout script.
+- This technique is commonly used for remote administration, automation, and scripting.
+
+### Practical Intel
+
+Common SSH command execution patterns:
+
+```bash
+ssh user@host "ls -lah"
+
+ssh user@host "cat /etc/os-release"
+
+ssh user@host "systemctl status nginx"
+
+ssh user@host "journalctl -u nginx --no-pager"
+
+ssh user@host "uptime"
+```
+
+Useful SSH options:
+
+```bash
+ssh -i ~/.ssh/id_ed25519 user@host    # Specify a private key
+
+ssh -p 2222 user@host                 # Connect to a custom port
+
+ssh -v user@host                      # Verbose mode (debugging)
+
+ssh user@host "command"               # Execute a remote command
+```
+
+Real-world uses:
+
+- Run maintenance tasks on servers.
+- Retrieve logs without opening a shell.
+- Automate deployments.
+- Execute scripts remotely.
+- Collect system information from cloud instances.
+
+### Password
+
+```text
+KpsOfPkcP7i1FlIExk2QEjyt6dw8dxZI
 ```
 
 ---
