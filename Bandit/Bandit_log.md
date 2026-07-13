@@ -623,3 +623,132 @@ KpsOfPkcP7i1FlIExk2QEjyt6dw8dxZI
 ```
 
 ---
+
+## Level 19
+
+### Objective
+
+Use the setuid binary `bandit20-do` to execute a command as the `bandit20` user and read the password stored in `/etc/bandit_pass/bandit20`.
+
+### Commands
+
+```bash
+ls -l
+
+./bandit20-do cat /etc/bandit_pass/bandit20
+```
+
+### Linux Concept
+
+- `setuid` (Set User ID) is a special Linux file permission that allows a program to run with the permissions of the file's owner instead of the user executing it.
+- The `bandit20-do` binary is owned by `bandit20` and has the setuid bit enabled.
+- When executed, it temporarily runs as the `bandit20` user, allowing access to files that `bandit19` cannot normally read.
+- This is a common privilege escalation mechanism used by trusted system utilities.
+
+### Practical Intel
+
+Inspect file permissions:
+
+```bash
+ls -l
+```
+
+Example output:
+
+```text
+-rwsr-x--- 1 bandit20 bandit19 14884 Jun 24 14:58 bandit20-do
+```
+
+Notice the `s` in the owner's execute field:
+
+```text
+-rwsr-x---
+   ^
+```
+
+This indicates the **setuid** bit is enabled.
+
+Useful commands:
+
+```bash
+find / -perm -4000 2>/dev/null     # Find all setuid binaries
+
+chmod u+s file                     # Enable the setuid bit (owner only)
+
+chmod u-s file                     # Remove the setuid bit
+
+stat file                          # View detailed file metadata
+```
+
+Real-world uses:
+
+- `passwd` allows normal users to change passwords by temporarily running with root privileges.
+- `sudo` uses privilege escalation to execute commands as another user.
+- System administration tools often rely on setuid to perform privileged tasks securely.
+- Security professionals audit setuid binaries because improperly configured ones can lead to privilege escalation vulnerabilities.
+
+### Password
+
+```text
+4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA
+```
+
+---
+
+## Level 20
+
+### Objective
+
+Use the `suconnect` program to connect to a listening TCP port on localhost. The service expects the current level's password and returns the password for the next level if the correct password is provided.
+
+### Commands
+
+```bash
+# Terminal 1
+echo "4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA" | nc -l -p 1234
+
+# Terminal 2
+./suconnect 1234
+```
+
+### Linux Concept
+
+- `suconnect` is a custom program that connects to a TCP port on the local machine.
+- `nc` (Netcat) is a versatile networking utility that can act as both a client and a server.
+- `nc -l` starts Netcat in **listening mode**, waiting for an incoming connection.
+- `-p 1234` specifies the port to listen on.
+- `echo` sends the current level's password into Netcat through a pipe (`|`).
+- `suconnect` connects to the listening port, reads the password, validates it, and returns the password for the next level.
+
+### Practical Intel
+
+Common Netcat commands:
+
+```bash
+nc host port                     # Connect to a TCP service
+
+nc -l -p 1234                    # Listen on TCP port 1234
+
+echo "Hello" | nc host port      # Send data to a service
+
+nc -vz host 22                   # Check whether a TCP port is open
+
+nc -lvnp 4444                    # Verbose listener (common in labs and troubleshooting)
+```
+
+Real-world uses:
+
+- Verify whether a service is reachable.
+- Test firewall and Security Group rules.
+- Debug client-server communication.
+- Troubleshoot Kubernetes services.
+- Check if an application is listening on the expected port.
+- Manually interact with TCP-based services.
+
+### Password
+
+```text
+4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA
+```
+
+---
